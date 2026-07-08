@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+     <style>
+        :root {
+            --ink: #101c2c;
+            --ink-soft: #1c2c42;
+            --paper: #f4f5f7;
+            --card: #ffffff;
+            --accent: #b9791a;
+            --accent-dark: #96610f;
+            --muted: #5b6472;
+            --line: #e3e6ea;
+            --ok: #1a7f4e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--ink);
+            background: var(--paper);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #5b6472;
+        }
+
+        a { color: inherit; }
+
+        /* ---------- Header ---------- */
+        header {
+            background: var(--ink);
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-inner {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .logo span { color: var(--accent); }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.4rem;
+            flex-wrap: wrap;
+        }
+
+        nav a, nav button {
+            color: #d6dbe3;
+            text-decoration: none;
+            font-size: 0.92rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0;
+        }
+
+        nav a:hover, nav button:hover { color: #fff; }
+
+        .cart-link {
+            background: var(--accent);
+            color: #fff !important;
+            padding: 0.45rem 0.95rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .cart-link:hover { background: var(--accent-dark); }
+
+        .trade-line {
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent) 0%, #d9a441 50%, var(--accent) 100%);
+        }
+
+        /* ---------- Main ---------- */
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 2.2rem 1.5rem 3rem;
+        }
+
+        .page-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.4rem;
+        }
+
+        /* ---------- Search ---------- */
+        .search-bar {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 2rem;
+            max-width: 520px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.65rem 0.9rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background: var(--card);
+        }
+
+        .search-bar input:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+            border-color: transparent;
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.65rem 1.3rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .btn:hover { background: var(--accent-dark); }
+
+        .btn-dark { background: var(--ink); }
+        .btn-dark:hover { background: var(--ink-soft); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        .btn-outline:hover { background: #eef0f3; }
+
+        /* ---------- Product grid ---------- */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .produto-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            text-decoration: none;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(16, 28, 44, 0.10);
+        }
+
+        .produto-card .img-wrap {
+            height: 180px;
+            background: #eceef1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .produto-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .produto-card .img-placeholder {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .produto-card .card-body {
+            padding: 0.9rem 1rem 1.1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1;
+        }
+
+        .produto-card .nome { font-weight: 600; font-size: 1rem; }
+
+        .produto-card .empresa {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .produto-card .preco {
+            margin-top: auto;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-dark);
+        }
+
+        /* ---------- Forms (login / register) ---------- */
+        .auth-card {
+            max-width: 420px;
+            margin: 2rem auto;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        .auth-card h2 { margin-bottom: 1.2rem; }
+
+        .auth-card form p { margin-bottom: 0.9rem; }
+
+        .auth-card label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .auth-card input {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .auth-card input:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 1px;
+            border-color: transparent;
+        }
+
+        .auth-card .helptext {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+
+        .auth-card ul.errorlist {
+            list-style: none;
+            color: #b02a2a;
+            font-size: 0.8rem;
+            margin: 0.25rem 0 0;
+        }
+
+        .auth-card .btn { width: 100%; margin-top: 0.6rem; }
+
+        .auth-alt {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 1rem;
+        }
+
+        /* ---------- Tables (cart) ---------- */
+        .table-wrap {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        th, td {
+            padding: 0.85rem 1rem;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: #f0f1f4;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+        }
+
+        tr + tr td { border-top: 1px solid var(--line); }
+
+        .total-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.3rem;
+        }
+
+        .total-row .valor { font-size: 1.3rem; font-weight: 700; }
+
+        .link-remove {
+            color: #b02a2a;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .link-remove:hover { text-decoration: underline; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+        }
+
+        .empty-state .btn { margin-top: 1rem; }
+
+        /* ---------- Footer ---------- */
+        footer {
+            background: var(--ink);
+            color: #aab3bf;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 2.2rem 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            font-size: 0.85rem;
+        }
+
+        footer h4 {
+            color: #fff;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.7rem;
+        }
+
+        footer a { color: #aab3bf; text-decoration: none; }
+        footer a:hover { color: #fff; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.78rem;
+            color: #7d8794;
+        }
+
+        @media (max-width: 600px) {
+            .header-inner { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTICLE</title>
+    
+</head>
+<body>
+    <main>
+    {% block content %}
+    <h1>Article</h1>
+    <div class="produtos-grid">
+        {% for article in articles %}
+        <div class="produto-card">
+            <div class="img-wrap">
+                {% if article.image %}
+                    <img src="{{ article.image.url }}" alt="{{ article.nom }}">
+                {% else %}
+                    <span class="img-placeholder">No image</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <span class="nome">{{ article.nom }}</span>
+                <a href="{% url 'articleDetail' article.id %}">{{ article.nom }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends "page/index.html" %}
+{% block content %}
+<div class="produto-card" style="max-width:500px;">
+    <div class="img-wrap">
+        {% if article.image %}
+            <img src="{{ article.image.url }}" alt="{{ article.nom }}">
+        {% else %}
+            <span class="img-placeholder">No image</span>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <span class="nome">{{ article.nom }}</span>
+        <p>{{ article.description }}</p>
+    </div>
+</div>
+{% endblock %}
